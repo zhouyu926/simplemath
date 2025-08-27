@@ -1,31 +1,21 @@
-cmake_minimum_required(VERSION 3.14)
-project(simplemath
-    VERSION 1.0.0
-    LANGUAGES CXX
-    DESCRIPTION "A simple math library"
-)
-include(GNUInstallDirs)
+cmake_minimum_required(VERSION 3.10)
+project(simplemath)
 
-# 添加源文件目录
-add_subdirectory(src)
+add_library(simplemath STATIC src/simplemath.cpp)
+target_include_directories(simplemath PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# 添加导出目标配置
-install(EXPORT simplemath-targets
-    FILE simplemath-targets.cmake
-    NAMESPACE simplemath::
-    DESTINATION lib/cmake/simplemath
+# 自动处理Debug/Release输出路径
+set_target_properties(simplemath PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/debug/lib"
+    ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/release/lib"
 )
 
-# 添加配置文件包生成
-include(CMakePackageConfigHelpers)
-configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/simplemath-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/simplemath-config.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/simplemath
+install(
+    TARGETS simplemath
+    EXPORT simplemath-targets
+    ARCHIVE DESTINATION lib
+    INCLUDES DESTINATION include
 )
 
-# 安装配置文件
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/simplemath-config.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/simplemath
-)
+install(DIRECTORY include/ DESTINATION include)
+install(EXPORT simplemath-targets FILE simplemath-config.cmake NAMESPACE simplemath:: DESTINATION share/simplemath)
