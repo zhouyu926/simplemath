@@ -17,4 +17,13 @@ target_sources(simplemath
         BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/..
         FILES
             ${CMAKE_CURRENT_SOURCE_DIR}/../include/simplemath.h
+
+)
+
+install(TARGETS simplemath
+    EXPORT simplemath-targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/simplemath
 )
