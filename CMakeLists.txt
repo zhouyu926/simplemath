@@ -15,3 +15,17 @@ install(EXPORT simplemath-targets
     NAMESPACE simplemath::
     DESTINATION lib/cmake/simplemath
 )
+
+# 添加配置文件包生成
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/simplemath-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/simplemath-config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/simplemath
+)
+
+# 安装配置文件
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/simplemath-config.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/simplemath
+)
