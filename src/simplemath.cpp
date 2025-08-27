@@ -1,4 +1,4 @@
-#include "include/simplemath.h"
+#include "simplemath.h"
 
 namespace simplemath {
 
